@@ -488,8 +488,8 @@ button { cursor: pointer; background: none; border: none; font-family: var(--fon
     display: none;
   }
   .hdr-logo {
-    width: 40px;
-    height: 40px;
+    width: 66px;
+    height: 66px;
   }
   .hdr-logo-text {
     display: none;
@@ -498,8 +498,8 @@ button { cursor: pointer; background: none; border: none; font-family: var(--fon
 
 @media (max-width: 400px) {
   .hdr-logo {
-    width: 36px;
-    height: 36px;
+    width: 66px;
+    height: 66px;
     border-width: 1.5px;
   }
   

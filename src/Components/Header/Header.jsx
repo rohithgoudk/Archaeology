@@ -157,7 +157,7 @@ export default function Header() {
         <div className="hdr-drawer-footer">
           <button 
             className="hdr-cta hdr-cta--full" 
-            onClick={() => handleNavigate("/contact", "Contact")}
+            onClick={() => handleNavigate("/login", "Login")}
           >
             Begin Expedition
           </button>
