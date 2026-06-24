@@ -1,0 +1,332 @@
+/* NotFound.css */
+@import url('https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Inter:wght@300;400;500;600;700;800&display=swap');
+
+.notfound-root {
+  position: relative;
+  min-height: 100vh;
+  min-height: 100dvh;
+  background: #0b0b12;
+  overflow: hidden;
+  font-family: 'Inter', system-ui, sans-serif;
+}
+
+.notfound-canvas {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 0;
+  display: block;
+}
+
+/* ── OVERLAY CONTENT ── */
+.notfound-overlay {
+  position: relative;
+  z-index: 1;
+  min-height: 100vh;
+  min-height: 100dvh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 2rem;
+  background: radial-gradient(ellipse at center, rgba(10, 8, 6, 0.3) 0%, rgba(10, 8, 6, 0.7) 100%);
+}
+
+.notfound-content {
+  max-width: 700px;
+  text-align: center;
+  animation: contentFloat 4s ease-in-out infinite;
+}
+
+@keyframes contentFloat {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-10px); }
+}
+
+.notfound-artifact-icon {
+  font-size: 4rem;
+  display: block;
+  margin-bottom: 1rem;
+  animation: iconBounce 3s ease-in-out infinite;
+}
+
+@keyframes iconBounce {
+  0%, 100% { transform: scale(1) rotate(-5deg); }
+  50% { transform: scale(1.1) rotate(5deg); }
+}
+
+.notfound-title {
+  font-family: 'Instrument Serif', Georgia, serif;
+  font-size: clamp(6rem, 20vw, 12rem);
+  font-weight: 400;
+  line-height: 1;
+  margin: 0;
+  background: linear-gradient(135deg, #D4A574 0%, #F5F0E8 40%, #B8860B 70%, #D4A574 100%);
+  background-size: 200% 200%;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  animation: gradientShift 4s ease-in-out infinite;
+  text-shadow: none;
+  filter: drop-shadow(0 10px 40px rgba(212, 165, 116, 0.2));
+}
+
+@keyframes gradientShift {
+  0%, 100% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+}
+
+.notfound-title .notfound-zero {
+  background: linear-gradient(135deg, #8B6F4A 0%, #D4A574 50%, #F5F0E8 100%);
+  background-size: 200% 200%;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  animation: gradientShift 4s ease-in-out infinite 1s;
+}
+
+.notfound-subtitle {
+  font-size: clamp(1.2rem, 2.5vw, 1.8rem);
+  font-weight: 600;
+  color: rgba(245, 240, 232, 0.8);
+  margin: 0.5rem 0 1rem;
+  letter-spacing: 0.04em;
+}
+
+.notfound-description {
+  font-size: clamp(0.9rem, 1.2vw, 1.05rem);
+  color: rgba(245, 240, 232, 0.5);
+  line-height: 1.7;
+  max-width: 500px;
+  margin: 0 auto 2rem;
+  font-weight: 300;
+}
+
+/* ── BUTTONS ── */
+.notfound-actions {
+  display: flex;
+  gap: 1rem;
+  justify-content: center;
+  flex-wrap: wrap;
+  margin-bottom: 2.5rem;
+}
+
+.notfound-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6rem;
+  padding: 0.8rem 2rem;
+  border: none;
+  border-radius: 100px;
+  font-family: 'Inter', system-ui, sans-serif;
+  font-size: 0.9rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  text-decoration: none;
+  position: relative;
+  overflow: hidden;
+}
+
+.notfound-btn::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(circle at center, rgba(255,255,255,0.1) 0%, transparent 70%);
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.notfound-btn:hover::after {
+  opacity: 1;
+}
+
+.notfound-btn-primary {
+  background: linear-gradient(135deg, #8B6F4A, #D4A574);
+  color: #fff;
+  box-shadow: 0 4px 20px rgba(212, 165, 116, 0.3);
+}
+
+.notfound-btn-primary:hover {
+  transform: translateY(-3px) scale(1.02);
+  box-shadow: 0 8px 30px rgba(212, 165, 116, 0.4);
+}
+
+.notfound-btn-secondary {
+  background: rgba(255, 255, 255, 0.06);
+  color: rgba(245, 240, 232, 0.7);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.notfound-btn-secondary:hover {
+  background: rgba(255, 255, 255, 0.12);
+  transform: translateY(-3px) scale(1.02);
+  border-color: rgba(212, 165, 116, 0.3);
+}
+
+.notfound-btn-icon {
+  font-size: 1.1rem;
+}
+
+/* ── HINTS ── */
+.notfound-hints {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.8rem;
+  padding: 0.8rem 1.5rem;
+  background: rgba(255, 255, 255, 0.03);
+  border-radius: 12px;
+  border: 1px solid rgba(255, 255, 255, 0.04);
+  margin-bottom: 2rem;
+}
+
+.notfound-hints span {
+  font-size: 1.2rem;
+}
+
+.notfound-hints p {
+  font-size: 0.8rem;
+  color: rgba(245, 240, 232, 0.35);
+  margin: 0;
+}
+
+/* ── DIG SITES INDICATOR ── */
+.notfound-dig-sites {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+}
+
+.notfound-sites-label {
+  font-size: 0.7rem;
+  color: rgba(245, 240, 232, 0.2);
+  text-transform: uppercase;
+  letter-spacing: 0.15em;
+}
+
+.notfound-sites-dots {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.notfound-site-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: rgba(212, 165, 116, 0.2);
+  animation: dotPulse 2s ease-in-out infinite;
+}
+
+.notfound-site-dot:nth-child(1) { animation-delay: 0s; }
+.notfound-site-dot:nth-child(2) { animation-delay: 0.3s; }
+.notfound-site-dot:nth-child(3) { animation-delay: 0.6s; }
+.notfound-site-dot:nth-child(4) { animation-delay: 0.9s; }
+.notfound-site-dot:nth-child(5) { animation-delay: 1.2s; }
+
+@keyframes dotPulse {
+  0%, 100% { 
+    background: rgba(212, 165, 116, 0.2);
+    transform: scale(1);
+  }
+  50% { 
+    background: rgba(212, 165, 116, 0.8);
+    transform: scale(1.3);
+  }
+}
+
+/* ── RESPONSIVE ── */
+@media (max-width: 768px) {
+  .notfound-content {
+    padding: 1rem;
+  }
+  
+  .notfound-artifact-icon {
+    font-size: 3rem;
+  }
+  
+  .notfound-title {
+    font-size: clamp(4rem, 15vw, 8rem);
+  }
+  
+  .notfound-actions {
+    flex-direction: column;
+    align-items: center;
+    gap: 0.8rem;
+  }
+  
+  .notfound-btn {
+    width: 100%;
+    max-width: 300px;
+    justify-content: center;
+    padding: 0.7rem 1.5rem;
+    font-size: 0.85rem;
+  }
+  
+  .notfound-description {
+    font-size: 0.85rem;
+  }
+  
+  .notfound-subtitle {
+    font-size: 1rem;
+  }
+  
+  .notfound-hints {
+    flex-direction: column;
+    text-align: center;
+    padding: 0.8rem 1rem;
+  }
+  
+  .notfound-hints p {
+    font-size: 0.75rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .notfound-root {
+    min-height: 100dvh;
+  }
+  
+  .notfound-overlay {
+    padding: 1rem;
+  }
+  
+  .notfound-title {
+    font-size: clamp(3.5rem, 12vw, 6rem);
+  }
+  
+  .notfound-artifact-icon {
+    font-size: 2.5rem;
+  }
+  
+  .notfound-subtitle {
+    font-size: 0.9rem;
+  }
+  
+  .notfound-description {
+    font-size: 0.8rem;
+    max-width: 100%;
+  }
+  
+  .notfound-btn {
+    font-size: 0.8rem;
+    padding: 0.6rem 1.2rem;
+    max-width: 250px;
+  }
+  
+  .notfound-dig-sites {
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .notfound-content,
+  .notfound-artifact-icon,
+  .notfound-title,
+  .notfound-site-dot {
+    animation: none !important;
+  }
+}

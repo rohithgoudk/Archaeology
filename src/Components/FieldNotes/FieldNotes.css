@@ -1,0 +1,330 @@
+/* FieldNotes.css */
+@import url('https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Inter:wght@300;400;500;600&display=swap');
+
+:root {
+  --ink: #0a0806;
+  --sand: #f5f0e8;
+  --dust: #b8a898;
+  --terra: #8b5e3c;
+  --stone: #4a4035;
+  --white: #ffffff;
+  --font-display: 'Instrument Serif', Georgia, serif;
+  --font-body: 'Inter', system-ui, sans-serif;
+}
+
+.fieldnotes-root {
+  min-height: 100vh;
+  background: var(--sand);
+  font-family: var(--font-body);
+}
+
+/* HERO */
+.fieldnotes-hero {
+  position: relative;
+  min-height: 60vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+.fieldnotes-hero-bg {
+  position: absolute;
+  inset: 0;
+  background-size: cover;
+  background-position: center;
+  animation: heroKenBurns 20s ease-in-out infinite alternate;
+}
+@keyframes heroKenBurns {
+  0% { transform: scale(1) rotate(-1deg); }
+  100% { transform: scale(1.1) rotate(1deg); }
+}
+.fieldnotes-hero-overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(135deg, rgba(10,8,6,0.85) 0%, rgba(10,8,6,0.3) 100%);
+  z-index: 1;
+}
+.fieldnotes-hero-content {
+  position: relative;
+  z-index: 2;
+  text-align: center;
+  padding: 2rem;
+}
+.fieldnotes-badge {
+  display: inline-block;
+  background: rgba(139,94,60,0.2);
+  backdrop-filter: blur(8px);
+  color: var(--white);
+  padding: 0.5rem 1.5rem;
+  border-radius: 100px;
+  font-size: 0.8rem;
+  margin-bottom: 1.5rem;
+  border: 1px solid rgba(255,255,255,0.1);
+  animation: shimmer 3s infinite;
+}
+@keyframes shimmer {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.6; }
+}
+.fieldnotes-title {
+  font-family: var(--font-display);
+  font-size: clamp(2.5rem, 6vw, 4.5rem);
+  font-weight: 400;
+  color: var(--white);
+  line-height: 0.97;
+  animation: slideUp 1s ease-out;
+}
+@keyframes slideUp {
+  from { opacity: 0; transform: translateY(40px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+.fieldnotes-title span {
+  color: var(--dust);
+  font-style: italic;
+}
+.fieldnotes-subtitle {
+  color: rgba(245,240,232,0.7);
+  font-size: 1rem;
+  font-weight: 300;
+  margin-top: 1rem;
+  letter-spacing: 0.1em;
+}
+
+/* Featured Note */
+.fieldnotes-featured {
+  position: relative;
+  min-height: 70vh;
+  display: flex;
+  align-items: center;
+  overflow: hidden;
+}
+.fieldnotes-featured-bg {
+  position: absolute;
+  inset: 0;
+  background-size: cover;
+  background-position: center;
+  animation: featureZoom 25s ease-in-out infinite alternate;
+}
+@keyframes featureZoom {
+  0% { transform: scale(1); }
+  100% { transform: scale(1.15); }
+}
+.fieldnotes-featured-overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(135deg, rgba(10,8,6,0.9) 0%, rgba(10,8,6,0.4) 100%);
+  z-index: 1;
+}
+.fieldnotes-featured-content {
+  position: relative;
+  z-index: 2;
+  max-width: 700px;
+  padding: 4rem 2rem;
+  margin: 0 auto;
+  text-align: center;
+}
+.fieldnotes-featured-tag {
+  display: inline-block;
+  background: var(--terra);
+  color: var(--white);
+  padding: 0.3rem 1.2rem;
+  border-radius: 100px;
+  font-size: 0.7rem;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  margin-bottom: 1.5rem;
+}
+.fieldnotes-featured-content h2 {
+  font-family: var(--font-display);
+  font-size: clamp(2rem, 4vw, 3.5rem);
+  color: var(--white);
+  font-weight: 400;
+  margin-bottom: 0.5rem;
+}
+.fieldnotes-featured-location {
+  color: var(--dust);
+  font-size: 0.9rem;
+  font-style: italic;
+  margin-bottom: 1.5rem;
+}
+.fieldnotes-featured-excerpt {
+  color: rgba(245,240,232,0.8);
+  font-size: 1.1rem;
+  line-height: 1.8;
+  margin-bottom: 2rem;
+  font-style: italic;
+}
+.fieldnotes-featured-btn {
+  background: transparent;
+  border: 2px solid var(--terra);
+  color: var(--white);
+  padding: 0.8rem 2.5rem;
+  border-radius: 100px;
+  cursor: pointer;
+  font-size: 0.9rem;
+  transition: all 0.3s;
+}
+.fieldnotes-featured-btn:hover {
+  background: var(--terra);
+  transform: scale(1.05);
+}
+
+/* Notes Grid */
+.fieldnotes-grid-section {
+  padding: 5rem 0;
+  background: var(--sand);
+}
+.fieldnotes-container {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 0 1.5rem;
+}
+.fieldnotes-container h2 {
+  font-family: var(--font-display);
+  font-size: clamp(2rem, 4vw, 3rem);
+  text-align: center;
+  color: var(--ink);
+  margin-bottom: 3rem;
+}
+.fieldnotes-container h2 span {
+  color: var(--terra);
+  font-style: italic;
+}
+.fieldnotes-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 2rem;
+}
+@media (max-width: 900px) {
+  .fieldnotes-grid { grid-template-columns: 1fr; }
+}
+
+.fieldnotes-card {
+  perspective: 1000px;
+  height: 420px;
+}
+.fieldnotes-card-inner {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  transition: transform 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+  transform-style: preserve-3d;
+}
+.fieldnotes-card:hover .fieldnotes-card-inner {
+  transform: rotateY(180deg);
+}
+.fieldnotes-card-front,
+.fieldnotes-card-back {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  backface-visibility: hidden;
+  border-radius: 12px;
+  overflow: hidden;
+}
+.fieldnotes-card-front {
+  background: var(--white);
+  box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+}
+.fieldnotes-card-image {
+  position: relative;
+  height: 200px;
+  overflow: hidden;
+}
+.fieldnotes-card-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.6s;
+}
+.fieldnotes-card:hover .fieldnotes-card-image img {
+  transform: scale(1.08);
+}
+.fieldnotes-card-emoji {
+  position: absolute;
+  bottom: -20px;
+  right: 1rem;
+  font-size: 2.5rem;
+  animation: bounce 2s ease-in-out infinite;
+}
+@keyframes bounce {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-10px); }
+}
+.fieldnotes-card-content {
+  padding: 1.5rem;
+}
+.fieldnotes-card-meta {
+  display: flex;
+  justify-content: space-between;
+  font-size: 0.7rem;
+  color: var(--dust);
+  margin-bottom: 0.5rem;
+}
+.fieldnotes-card-date {
+  font-weight: 500;
+}
+.fieldnotes-card-location {
+  font-style: italic;
+}
+.fieldnotes-card-content h3 {
+  font-family: var(--font-display);
+  font-size: 1.2rem;
+  font-weight: 400;
+  color: var(--ink);
+  margin-bottom: 0.5rem;
+}
+.fieldnotes-card-excerpt {
+  font-size: 0.85rem;
+  line-height: 1.6;
+  color: var(--stone);
+  margin-bottom: 0.75rem;
+}
+.fieldnotes-card-tag {
+  display: inline-block;
+  font-size: 0.6rem;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--terra);
+  background: rgba(139,94,60,0.1);
+  padding: 0.3rem 0.8rem;
+  border-radius: 100px;
+}
+
+.fieldnotes-card-back {
+  background: var(--ink);
+  color: var(--white);
+  transform: rotateY(180deg);
+  padding: 2rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+}
+.fieldnotes-card-back h4 {
+  font-family: var(--font-display);
+  font-size: 1.5rem;
+  color: var(--dust);
+  margin-bottom: 1rem;
+}
+.fieldnotes-card-back p {
+  font-size: 0.9rem;
+  line-height: 1.7;
+  color: rgba(245,240,232,0.7);
+  margin-bottom: 1.5rem;
+}
+.fieldnotes-card-btn {
+  background: transparent;
+  border: 1.5px solid var(--terra);
+  color: var(--white);
+  padding: 0.6rem 2rem;
+  border-radius: 100px;
+  cursor: pointer;
+  font-size: 0.8rem;
+  transition: all 0.3s;
+}
+.fieldnotes-card-btn:hover {
+  background: var(--terra);
+  transform: scale(1.05);
+}
