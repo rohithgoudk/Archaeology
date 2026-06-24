@@ -10,7 +10,6 @@ export default function Login() {
   const [showPassword, setShowPassword] = useState(false);
   const [emailError, setEmailError] = useState("");
   const [passwordError, setPasswordError] = useState("");
-  const [isLoading, setIsLoading] = useState(false);
   const [role, setRole] = useState("user"); // "user" or "admin"
 
   // Validate Gmail only
@@ -57,29 +56,22 @@ export default function Login() {
     }
 
     if (isEmailValid && isPasswordValid) {
-      setIsLoading(true);
-      
-      // Simulate login based on role
-      setTimeout(() => {
-        setIsLoading(false);
-        
-        // Store user info in localStorage
-        const userData = {
-          email,
-          role,
-          name: email.split('@')[0],
-          loginTime: new Date().toISOString()
-        };
-        localStorage.setItem('user', JSON.stringify(userData));
-        localStorage.setItem('isAuthenticated', 'true');
+      // Store user info in localStorage
+      const userData = {
+        email,
+        role,
+        name: email.split('@')[0],
+        loginTime: new Date().toISOString()
+      };
+      localStorage.setItem('user', JSON.stringify(userData));
+      localStorage.setItem('isAuthenticated', 'true');
 
-        // Navigate based on role
-        if (role === "admin") {
-          navigate("/admin-dashboard");
-        } else {
-          navigate("/user-dashboard");
-        }
-      }, 1500);
+      // Navigate directly based on role (no delay)
+      if (role === "admin") {
+        navigate("/admin-dashboard");
+      } else {
+        navigate("/user-dashboard");
+      }
     }
   };
 
@@ -206,20 +198,10 @@ export default function Login() {
 
             <button
               type="submit"
-              className={`login-submit-btn ${isLoading ? "login-submit-btn--loading" : ""}`}
-              disabled={isLoading}
+              className="login-submit-btn"
             >
-              {isLoading ? (
-                <>
-                  <span className="login-spinner"></span>
-                  Signing in as {role === "admin" ? "Admin" : "User"}...
-                </>
-              ) : (
-                <>
-                  Sign In as {role === "admin" ? "Admin" : "User"}
-                  <span className="login-btn-arrow">→</span>
-                </>
-              )}
+              Sign In as {role === "admin" ? "Admin" : "User"}
+              <span className="login-btn-arrow">→</span>
             </button>
           </form>
 

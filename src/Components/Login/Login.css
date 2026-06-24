@@ -35,7 +35,7 @@
 .login-bg-image {
   position: absolute;
   inset: 0;
-  background-image: url('../../assets/AR13.webp');
+  background-image: url('../../assets/AR2.webp');
   background-size: cover;
   background-position: center;
   animation: bgZoom 25s ease-in-out infinite alternate;
