@@ -1,4 +1,4 @@
-/* Signup.css - Updated for no tick marks */
+/* Signup.css - Updated for no tick marks, fixed autofill white bg, fixed Edge double eye icon */
 @import url('https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Inter:wght@300;400;500;600&display=swap');
 
 :root {
@@ -313,7 +313,10 @@
   background: rgba(255,255,255,0.06);
   border: 2px solid rgba(255,255,255,0.08);
   border-radius: 12px;
-  transition: all 0.3s ease;
+  transition: border-color 0.3s ease, box-shadow 0.3s ease;
+  /* NOTE: removed "transition: all" so autofill background-color changes
+     applied by the browser aren't caught in a CSS transition that can
+     cause flashing/incorrect repaint timing */
 }
 
 .signup-input-wrap:focus-within {
@@ -351,6 +354,36 @@
   font-weight: 300;
 }
 
+/* ── AUTOFILL FIX (Chrome / Edge / Safari - WebKit/Blink) ── */
+/* The 1000px inset spread guarantees full coverage of the native
+   autofill background regardless of input size/zoom. The long
+   transition-delay trick prevents the browser's own yellow/blue/white
+   flash from ever becoming visible before our override paints. */
+.signup-input:-webkit-autofill,
+.signup-input:-webkit-autofill:hover,
+.signup-input:-webkit-autofill:focus,
+.signup-input:-webkit-autofill:active {
+  -webkit-box-shadow: 0 0 0 1000px rgba(255,255,255,0.06) inset !important;
+  box-shadow: 0 0 0 1000px rgba(255,255,255,0.06) inset !important;
+  -webkit-text-fill-color: var(--white) !important;
+  caret-color: var(--white) !important;
+  transition: background-color 600000s 0s, color 600000s 0s !important;
+}
+
+/* ── AUTOFILL FIX (Firefox + modern standard pseudo-class) ── */
+.signup-input:autofill {
+  box-shadow: 0 0 0 1000px rgba(255,255,255,0.06) inset !important;
+  -webkit-text-fill-color: var(--white) !important;
+  filter: none;
+}
+
+/* Also neutralize the wrapper in case the browser paints background
+   on an ancestor during autofill highlighting (rare, but seen in some
+   Edge versions when zoomed) */
+.signup-input-wrap:has(.signup-input:-webkit-autofill) {
+  background: rgba(255,255,255,0.06);
+}
+
 .signup-password-toggle {
   position: absolute;
   right: 0.75rem;
@@ -365,6 +398,7 @@
   align-items: center;
   justify-content: center;
   touch-action: manipulation;
+  z-index: 2; /* sit above the native Edge reveal button area */
 }
 
 .signup-password-toggle:hover {
@@ -374,6 +408,28 @@
 
 .signup-password-toggle:active {
   transform: scale(0.9);
+}
+
+/* ── FIX: Microsoft Edge double eye icon ──
+   Edge automatically injects its own native "reveal password" button
+   (::-ms-reveal) inside <input type="password">. This collides visually
+   with our custom SVG eye toggle button, producing two icons stacked
+   together. We hide Edge's native one entirely so only our custom
+   toggle shows. */
+.signup-input::-ms-reveal {
+  display: none;
+}
+
+.signup-input::-ms-clear {
+  display: none;
+}
+
+/* Give the input right padding so text never sits under our custom
+   eye button, now that Edge's native one is gone and ours is the
+   only icon present */
+input[type="password"].signup-input,
+input[type="text"].signup-input {
+  padding-right: 2.75rem;
 }
 
 .signup-error {
@@ -440,6 +496,13 @@
 /* ── TERMS ── */
 .signup-terms {
   margin: 0.25rem 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+}
+
+.signup-error--terms {
+  margin-left: 1.5rem;
 }
 
 .signup-checkbox {
@@ -585,7 +648,7 @@
     padding: 0.7rem 1.2rem;
     font-size: 0.85rem;
     min-height: 44px;
-    border-radius: 8px;
+    padding: 0.5rem 1rem;
   }
 }
 
@@ -749,17 +812,6 @@
   .signup-login-link {
     font-size: 0.75rem;
   }
-}
-
-/* ── INPUT AUTO-FILL STYLES ── */
-.signup-input:-webkit-autofill {
-  -webkit-box-shadow: 0 0 0 30px rgba(255,255,255,0.05) inset !important;
-  -webkit-text-fill-color: var(--white) !important;
-  caret-color: var(--white);
-}
-
-.signup-input:-webkit-autofill:focus {
-  -webkit-box-shadow: 0 0 0 30px rgba(255,255,255,0.08) inset !important;
 }
 
 /* ── TOUCH DEVICE OPTIMIZATIONS ── */

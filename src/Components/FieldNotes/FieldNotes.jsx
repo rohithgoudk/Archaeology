@@ -63,7 +63,7 @@ export default function FieldNotes() {
         </div>
       </section>
 
-      {/* Notes Grid with Hover Reveal */}
+      {/* Notes Grid with Hover Reveal (flip disabled on touch, see CSS) */}
       <section className="fieldnotes-grid-section">
         <div className="fieldnotes-container">
           <h2>Recent <span>Entries</span></h2>
@@ -121,6 +121,18 @@ export default function FieldNotes() {
                       <h3>{note.title}</h3>
                       <p className="fieldnotes-card-excerpt">{note.excerpt}</p>
                       <span className="fieldnotes-card-tag">{note.tag}</span>
+                      {/* This button is hidden by default (only the
+                          back face's button is normally visible after
+                          the 3D flip on hover). On touch devices the
+                          CSS disables the flip and reveals this button
+                          instead, so the action stays reachable without
+                          a hover state. */}
+                      <button
+                        className="fieldnotes-card-mobile-btn"
+                        onClick={handleNavigate}
+                      >
+                        Read Full Entry →
+                      </button>
                     </div>
                   </div>
                   <div className="fieldnotes-card-back">

@@ -4,13 +4,12 @@ import { useNavigate } from "react-router-dom";
 import "./ArchaeologyPage.css";
 import bg1 from "../../assets/bg1.webp";
 import bg2 from "../../assets/bg2.webp";
-import bg3 from "../../assets/bg3.webp";
 import img1 from "../../assets/AR1.webp";
 import img2 from "../../assets/AR2.webp";
 import img3 from "../../assets/AR3.webp";
 import img4 from "../../assets/AR4.webp";
 import img5 from "../../assets/AR5.webp";
-import img6 from "../../assets/AR6.webp";
+import img6 from "../../assets/AR4.webp";
 import img7 from "../../assets/AR7.webp";
 import img8 from "../../assets/AR8.webp";
 import img9 from "../../assets/AR9.webp";
@@ -18,10 +17,9 @@ import img10 from "../../assets/AR10.webp";
 import img11 from "../../assets/AR11.webp";
 import img12 from "../../assets/AR12.webp";
 import img13 from "../../assets/AR13.webp";
-import img14 from "../../assets/AR14.webp";
 
 // ----- 3 HERO SLIDESHOW IMAGES (7s zoom per image) -----
-const HERO_SLIDES = [img6, bg2, img2];
+const HERO_SLIDES = [bg1, bg2, img2];
 
 // Other static images for rest of page
 const IMAGES = {

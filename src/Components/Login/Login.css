@@ -389,7 +389,9 @@
   background: rgba(255,255,255,0.06);
   border: 2px solid rgba(255,255,255,0.08);
   border-radius: 12px;
-  transition: all 0.3s ease;
+  transition: border-color 0.3s ease, box-shadow 0.3s ease;
+  /* removed "transition: all" - it was catching the browser's
+     autofill background-color change and could cause a visible flash */
 }
 
 .login-input-wrap:focus-within {
@@ -414,7 +416,7 @@
   background: transparent;
   border: none;
   outline: none;
-  color: var(--white);
+  color: #ffffff;
   font-family: var(--font-body);
   font-size: 0.95rem;
   min-height: 48px;
@@ -427,9 +429,33 @@
   font-weight: 300;
 }
 
-/* ── REMOVED TICK MARK STYLES ── */
-/* The .login-input-check styles have been removed */
+/* ── AUTOFILL FIX (Chrome / Edge / Safari - WebKit/Blink) ──
+   Use a large inset box-shadow instead of trying to force
+   background/background-color to transparent — Chromium ignores
+   background-color overrides on autofilled inputs, but it always
+   respects box-shadow, so painting our own color via inset shadow
+   reliably hides the native fill color regardless of input size.
+   The very long transition-delay stops the native fill color from
+   ever flashing visibly before our override paints. */
+.login-input:-webkit-autofill,
+.login-input:-webkit-autofill:hover,
+.login-input:-webkit-autofill:focus,
+.login-input:-webkit-autofill:active {
+  -webkit-box-shadow: 0 0 0 1000px rgba(255,255,255,0.06) inset !important;
+  box-shadow: 0 0 0 1000px rgba(255,255,255,0.06) inset !important;
+  -webkit-text-fill-color: #ffffff !important;
+  caret-color: #ffffff !important;
+  transition: background-color 600000s 0s, color 600000s 0s !important;
+}
 
+/* ── AUTOFILL FIX (Firefox + standard pseudo-class) ── */
+.login-input:autofill {
+  box-shadow: 0 0 0 1000px rgba(255,255,255,0.06) inset !important;
+  -webkit-text-fill-color: #ffffff !important;
+  filter: none;
+}
+
+/* ── PASSWORD TOGGLE ── */
 .login-password-toggle {
   position: absolute;
   right: 0.75rem;
@@ -444,6 +470,7 @@
   align-items: center;
   justify-content: center;
   touch-action: manipulation;
+  z-index: 2; /* sit above where Edge's native reveal icon would render */
 }
 
 .login-password-toggle:hover {
@@ -453,6 +480,26 @@
 
 .login-password-toggle:active {
   transform: scale(0.9);
+}
+
+/* ── FIX: Microsoft Edge double eye icon ──
+   Edge injects its own native "reveal password" button (::-ms-reveal)
+   inside every <input type="password">. That collides with our custom
+   SVG eye button, showing two icons stacked together. Hide Edge's
+   native one so only our custom toggle is visible. */
+.login-input::-ms-reveal {
+  display: none;
+}
+
+.login-input::-ms-clear {
+  display: none;
+}
+
+/* Reserve space for our custom eye icon now that Edge's native one
+   is gone and ours is the only icon present */
+input[type="password"].login-input,
+input[type="text"].login-input {
+  padding-right: 2.75rem;
 }
 
 .login-error {
@@ -746,17 +793,6 @@
   .login-register-link {
     font-size: 0.75rem;
   }
-}
-
-/* ── INPUT AUTO-FILL STYLES ── */
-.login-input:-webkit-autofill {
-  -webkit-box-shadow: 0 0 0 30px rgba(255,255,255,0.05) inset !important;
-  -webkit-text-fill-color: var(--white) !important;
-  caret-color: var(--white);
-}
-
-.login-input:-webkit-autofill:focus {
-  -webkit-box-shadow: 0 0 0 30px rgba(255,255,255,0.08) inset !important;
 }
 
 /* ── TOUCH DEVICE OPTIMIZATIONS ── */

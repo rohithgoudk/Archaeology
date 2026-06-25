@@ -118,6 +118,9 @@ export default function Signup() {
       case "confirmPassword":
         error = validateConfirmPassword(newValue);
         break;
+      case "acceptTerms":
+        error = newValue ? "" : "Please accept the Terms & Conditions to continue";
+        break;
       default:
         break;
     }
@@ -134,13 +137,15 @@ export default function Signup() {
     const emailError = validateEmail(formData.email);
     const passwordError = validatePassword(formData.password);
     const confirmPasswordError = validateConfirmPassword(formData.confirmPassword);
+    const termsError = !formData.acceptTerms ? "Please accept the Terms & Conditions to continue" : "";
     
     const newErrors = {
       fullName: fullNameError,
       username: usernameError,
       email: emailError,
       password: passwordError,
-      confirmPassword: confirmPasswordError
+      confirmPassword: confirmPasswordError,
+      acceptTerms: termsError
     };
     
     setErrors(newErrors);
@@ -148,7 +153,7 @@ export default function Signup() {
     // Check if there are any errors
     const hasErrors = Object.values(newErrors).some(error => error !== "");
     
-    if (!hasErrors && formData.acceptTerms) {
+    if (!hasErrors) {
       setIsLoading(true);
       // Simulate signup
       setTimeout(() => {
@@ -355,6 +360,7 @@ export default function Signup() {
                 <span className="signup-checkbox-custom"></span>
                 I accept the <a href="#" className="signup-terms-link">Terms & Conditions</a>
               </label>
+              {errors.acceptTerms && <span className="signup-error signup-error--terms">{errors.acceptTerms}</span>}
             </div>
 
             {/* Submit Button */}

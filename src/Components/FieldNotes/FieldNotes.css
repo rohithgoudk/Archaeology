@@ -1,4 +1,4 @@
-/* FieldNotes.css */
+/* FieldNotes.css - Mobile Responsive */
 @import url('https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Inter:wght@300;400;500;600&display=swap');
 
 :root {
@@ -16,6 +16,7 @@
   min-height: 100vh;
   background: var(--sand);
   font-family: var(--font-body);
+  overflow-x: hidden;
 }
 
 /* HERO */
@@ -49,6 +50,7 @@
   z-index: 2;
   text-align: center;
   padding: 2rem;
+  max-width: 100%;
 }
 .fieldnotes-badge {
   display: inline-block;
@@ -61,6 +63,7 @@
   margin-bottom: 1.5rem;
   border: 1px solid rgba(255,255,255,0.1);
   animation: shimmer 3s infinite;
+  white-space: nowrap;
 }
 @keyframes shimmer {
   0%, 100% { opacity: 1; }
@@ -88,6 +91,47 @@
   font-weight: 300;
   margin-top: 1rem;
   letter-spacing: 0.1em;
+}
+
+/* HERO RESPONSIVE */
+@media (max-width: 768px) {
+  .fieldnotes-hero {
+    min-height: 50vh;
+  }
+  .fieldnotes-hero-content {
+    padding: 1.5rem;
+  }
+  .fieldnotes-badge {
+    padding: 0.45rem 1.2rem;
+    font-size: 0.75rem;
+    margin-bottom: 1.25rem;
+  }
+  .fieldnotes-subtitle {
+    font-size: 0.9rem;
+    letter-spacing: 0.06em;
+    margin-top: 0.75rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .fieldnotes-hero {
+    min-height: 45vh;
+  }
+  .fieldnotes-hero-content {
+    padding: 1.25rem 1rem;
+  }
+  .fieldnotes-badge {
+    padding: 0.4rem 1rem;
+    font-size: 0.7rem;
+    margin-bottom: 1rem;
+  }
+  .fieldnotes-title {
+    line-height: 1.05;
+  }
+  .fieldnotes-subtitle {
+    font-size: 0.8rem;
+    letter-spacing: 0.04em;
+  }
 }
 
 /* Featured Note */
@@ -163,10 +207,70 @@
   cursor: pointer;
   font-size: 0.9rem;
   transition: all 0.3s;
+  touch-action: manipulation;
+  -webkit-tap-highlight-color: transparent;
 }
 .fieldnotes-featured-btn:hover {
   background: var(--terra);
   transform: scale(1.05);
+}
+
+/* FEATURED RESPONSIVE */
+@media (max-width: 768px) {
+  .fieldnotes-featured {
+    min-height: 60vh;
+  }
+  .fieldnotes-featured-content {
+    padding: 3rem 1.5rem;
+    max-width: 90%;
+  }
+  .fieldnotes-featured-tag {
+    font-size: 0.65rem;
+    padding: 0.3rem 1rem;
+    margin-bottom: 1.25rem;
+  }
+  .fieldnotes-featured-location {
+    font-size: 0.85rem;
+    margin-bottom: 1.25rem;
+  }
+  .fieldnotes-featured-excerpt {
+    font-size: 1rem;
+    line-height: 1.7;
+    margin-bottom: 1.5rem;
+  }
+  .fieldnotes-featured-btn {
+    padding: 0.7rem 2rem;
+    font-size: 0.85rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .fieldnotes-featured {
+    min-height: 55vh;
+  }
+  .fieldnotes-featured-content {
+    padding: 2.5rem 1.25rem;
+    max-width: 100%;
+  }
+  .fieldnotes-featured-tag {
+    font-size: 0.6rem;
+    padding: 0.25rem 0.9rem;
+    margin-bottom: 1rem;
+  }
+  .fieldnotes-featured-location {
+    font-size: 0.8rem;
+    margin-bottom: 1rem;
+  }
+  .fieldnotes-featured-excerpt {
+    font-size: 0.9rem;
+    line-height: 1.6;
+    margin-bottom: 1.25rem;
+  }
+  .fieldnotes-featured-btn {
+    width: 100%;
+    padding: 0.7rem 1.5rem;
+    font-size: 0.8rem;
+  }
 }
 
 /* Notes Grid */
@@ -197,6 +301,34 @@
 }
 @media (max-width: 900px) {
   .fieldnotes-grid { grid-template-columns: 1fr; }
+}
+
+/* GRID SECTION RESPONSIVE */
+@media (max-width: 768px) {
+  .fieldnotes-grid-section {
+    padding: 3.5rem 0;
+  }
+  .fieldnotes-container {
+    padding: 0 1.25rem;
+  }
+  .fieldnotes-container h2 {
+    margin-bottom: 2.25rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .fieldnotes-grid-section {
+    padding: 2.5rem 0;
+  }
+  .fieldnotes-container {
+    padding: 0 1rem;
+  }
+  .fieldnotes-container h2 {
+    margin-bottom: 1.75rem;
+  }
+  .fieldnotes-grid {
+    gap: 1.25rem;
+  }
 }
 
 .fieldnotes-card {
@@ -260,12 +392,14 @@
   font-size: 0.7rem;
   color: var(--dust);
   margin-bottom: 0.5rem;
+  gap: 0.5rem;
 }
 .fieldnotes-card-date {
   font-weight: 500;
 }
 .fieldnotes-card-location {
   font-style: italic;
+  text-align: right;
 }
 .fieldnotes-card-content h3 {
   font-family: var(--font-display);
@@ -289,6 +423,10 @@
   background: rgba(139,94,60,0.1);
   padding: 0.3rem 0.8rem;
   border-radius: 100px;
+}
+
+.fieldnotes-card-mobile-btn {
+  display: none; /* only shown on touch breakpoint, see media query below */
 }
 
 .fieldnotes-card-back {
@@ -323,8 +461,130 @@
   cursor: pointer;
   font-size: 0.8rem;
   transition: all 0.3s;
+  touch-action: manipulation;
+  -webkit-tap-highlight-color: transparent;
 }
 .fieldnotes-card-btn:hover {
   background: var(--terra);
   transform: scale(1.05);
+}
+
+/* CARD RESPONSIVE */
+@media (max-width: 768px) {
+  .fieldnotes-card {
+    height: 400px;
+  }
+  .fieldnotes-card-image {
+    height: 180px;
+  }
+  .fieldnotes-card-content {
+    padding: 1.25rem;
+  }
+  .fieldnotes-card-content h3 {
+    font-size: 1.1rem;
+  }
+  .fieldnotes-card-excerpt {
+    font-size: 0.8rem;
+  }
+  .fieldnotes-card-back {
+    padding: 1.75rem;
+  }
+  .fieldnotes-card-back h4 {
+    font-size: 1.3rem;
+  }
+  .fieldnotes-card-back p {
+    font-size: 0.85rem;
+    margin-bottom: 1.25rem;
+  }
+}
+
+@media (max-width: 600px) {
+  /*
+    3D flip relies on :hover, which doesn't exist on touch devices —
+    on a phone, the back face would be permanently unreachable.
+    Below 600px we disable the flip and just show the front face,
+    with the "Continue Reading" action exposed as a normal button
+    on the front so the content is still fully accessible by tap.
+  */
+  .fieldnotes-card {
+    height: auto;
+    perspective: none;
+  }
+  .fieldnotes-card-inner {
+    position: relative;
+    transition: none;
+    transform-style: flat;
+  }
+  .fieldnotes-card:hover .fieldnotes-card-inner {
+    transform: none;
+  }
+  .fieldnotes-card-front {
+    position: relative;
+    backface-visibility: visible;
+  }
+  .fieldnotes-card-back {
+    display: none;
+  }
+  .fieldnotes-card-image {
+    height: 200px;
+  }
+  .fieldnotes-card:hover .fieldnotes-card-image img {
+    transform: none;
+  }
+  .fieldnotes-card-mobile-btn {
+    display: inline-block;
+    background: transparent;
+    border: 1.5px solid var(--terra);
+    color: var(--terra);
+    padding: 0.55rem 1.5rem;
+    border-radius: 100px;
+    cursor: pointer;
+    font-size: 0.75rem;
+    font-family: var(--font-body);
+    margin-top: 0.5rem;
+    touch-action: manipulation;
+    -webkit-tap-highlight-color: transparent;
+  }
+  .fieldnotes-card-mobile-btn:active {
+    background: var(--terra);
+    color: var(--white);
+  }
+}
+
+@media (max-width: 480px) {
+  .fieldnotes-card-image {
+    height: 170px;
+  }
+  .fieldnotes-card-emoji {
+    font-size: 2rem;
+    bottom: -16px;
+    right: 0.75rem;
+  }
+  .fieldnotes-card-content {
+    padding: 1rem;
+  }
+  .fieldnotes-card-meta {
+    font-size: 0.65rem;
+  }
+  .fieldnotes-card-content h3 {
+    font-size: 1.05rem;
+  }
+  .fieldnotes-card-excerpt {
+    font-size: 0.78rem;
+    line-height: 1.55;
+  }
+  .fieldnotes-card-tag {
+    font-size: 0.55rem;
+    padding: 0.25rem 0.7rem;
+  }
+}
+
+@media (max-width: 360px) {
+  .fieldnotes-card-meta {
+    flex-direction: column;
+    gap: 0.2rem;
+  }
+  .fieldnotes-card-location {
+    text-align: left;
+  }
 }

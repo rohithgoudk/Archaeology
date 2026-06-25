@@ -110,7 +110,7 @@ export default function Footer() {
             {/* Socials */}
             <div className="ftr-socials">
               {SOCIALS.map(({ label, href, icon }) => (
-                <Link key={label} to={href} className="ftr-social" aria-label={label} onClick={(e) => e.preventDefault()}>
+                <Link key={label} to={href} className="ftr-social" aria-label={label} onClick={() => navigate("/404")}>
                   {icon}
                 </Link>
               ))}
