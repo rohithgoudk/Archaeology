@@ -372,17 +372,17 @@
 .fieldnotes-card:hover .fieldnotes-card-image img {
   transform: scale(1.08);
 }
+
+/* EMOJI — stable, fully visible, no animation */
 .fieldnotes-card-emoji {
   position: absolute;
-  bottom: -20px;
+  bottom: 0.75rem;
   right: 1rem;
-  font-size: 2.5rem;
-  animation: bounce 2s ease-in-out infinite;
+  font-size: 2rem;
+  line-height: 1;
+  pointer-events: none;
 }
-@keyframes bounce {
-  0%, 100% { transform: translateY(0); }
-  50% { transform: translateY(-10px); }
-}
+
 .fieldnotes-card-content {
   padding: 1.5rem;
 }
@@ -426,7 +426,7 @@
 }
 
 .fieldnotes-card-mobile-btn {
-  display: none; /* only shown on touch breakpoint, see media query below */
+  display: none;
 }
 
 .fieldnotes-card-back {
@@ -499,13 +499,6 @@
 }
 
 @media (max-width: 600px) {
-  /*
-    3D flip relies on :hover, which doesn't exist on touch devices —
-    on a phone, the back face would be permanently unreachable.
-    Below 600px we disable the flip and just show the front face,
-    with the "Continue Reading" action exposed as a normal button
-    on the front so the content is still fully accessible by tap.
-  */
   .fieldnotes-card {
     height: auto;
     perspective: none;
@@ -556,8 +549,8 @@
     height: 170px;
   }
   .fieldnotes-card-emoji {
-    font-size: 2rem;
-    bottom: -16px;
+    font-size: 1.75rem;
+    bottom: 0.6rem;
     right: 0.75rem;
   }
   .fieldnotes-card-content {
