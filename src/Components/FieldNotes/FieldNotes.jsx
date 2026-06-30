@@ -76,7 +76,7 @@ export default function FieldNotes() {
                 excerpt: "Today we broke through the final seal. The chamber before us was untouched for over 4,500 years.",
                 img: IMAGES.scroll,
                 tag: "Egyptology",
-                emoji: "🏛️"
+                
               },
               {
                 date: "May 28, 2025",
@@ -85,7 +85,7 @@ export default function FieldNotes() {
                 excerpt: "The sonar showed clear outlines of a Hellenistic agora, complete with colonnades and market stalls.",
                 img: IMAGES.ruins2,
                 tag: "Maritime",
-                emoji: "🌊"
+               
               },
               {
                 date: "April 4, 2025",
@@ -94,7 +94,7 @@ export default function FieldNotes() {
                 excerpt: "With each meter we descended, we found another offering bundle, perfectly preserved.",
                 img: IMAGES.cave,
                 tag: "Maya Studies",
-                emoji: "💎"
+                
               },
               {
                 date: "March 15, 2025",
@@ -103,7 +103,7 @@ export default function FieldNotes() {
                 excerpt: "Among the usual potsherds and stone tools, we uncovered something extraordinary — a gold phiale.",
                 img: IMAGES.artifact2,
                 tag: "Metalwork",
-                emoji: "✨"
+                
               },
             ].map((note, idx) => (
               <div className="fieldnotes-card" key={idx}>

@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect, useRef } from "react";
 import "./Dashboard.css";
 import logo from "../../assets/Stacklyimg1.webp"
 import { useNavigate } from "react-router-dom";
@@ -251,7 +251,7 @@ function ExcavationsPage({ navigate }) {
       <div className="card">
         <div className="card-header">
           <div><h2 className="card-title">All Excavations</h2><p className="card-sub">Full list of field operations</p></div>
-          <div style={{ display: "flex", gap: 8, flexWrap: "wrap" }}>
+          <div className="filter-row" style={{ display: "flex", gap: 8, flexWrap: "wrap" }}>
             {statuses.map(s => (
               <button key={s} className={`btn-outline ${filter === s ? "btn-active" : ""}`} onClick={() => setFilter(s)}
                 style={filter === s ? { borderColor: "#D4A574", color: "#D4A574" } : {}}>{s}</button>
@@ -302,9 +302,9 @@ function TeamsPage({ navigate }) {
       </section>
       <div className="card">
         <div className="card-header"><div><h2 className="card-title">Field Researchers</h2><p className="card-sub">Full team directory</p></div></div>
-        <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(300px, 1fr))", gap: 16 }}>
+        <div className="team-grid">
           {fieldTeam.map((m, i) => (
-            <div key={i} style={{ background: "var(--surface-2)", borderRadius: 12, padding: "18px 20px", border: "1px solid var(--border)", transition: "all 0.3s ease", cursor: "pointer" }}
+            <div key={i} className="team-card"
               onClick={() => navigate("/404")}
               onMouseEnter={e => { e.currentTarget.style.borderColor = "rgba(212,165,116,0.4)"; e.currentTarget.style.transform = "translateY(-3px)"; }}
               onMouseLeave={e => { e.currentTarget.style.borderColor = "var(--border)"; e.currentTarget.style.transform = "none"; }}>
@@ -401,12 +401,12 @@ function ResearchPage({ navigate }) {
         <div className="card-header"><div><h2 className="card-title">Research Papers</h2><p className="card-sub">Active publications and submissions</p></div></div>
         <div style={{ display: "flex", flexDirection: "column", gap: 14 }}>
           {researchPapers.map((p, i) => (
-            <div key={i} style={{ padding: "16px 20px", borderRadius: 10, background: "var(--surface-2)", border: "1px solid var(--border)", transition: "all 0.3s ease", cursor: "pointer" }}
+            <div key={i} className="research-card"
               onClick={() => navigate("/404")}
               onMouseEnter={e => { e.currentTarget.style.borderColor = "rgba(212,165,116,0.35)"; e.currentTarget.style.transform = "translateX(4px)"; }}
               onMouseLeave={e => { e.currentTarget.style.borderColor = "var(--border)"; e.currentTarget.style.transform = "none"; }}>
-              <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", gap: 12 }}>
-                <div style={{ flex: 1 }}>
+              <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", gap: 12, flexWrap: "wrap" }}>
+                <div style={{ flex: 1, minWidth: 180 }}>
                   <div style={{ fontWeight: 700, color: "#fff", fontSize: 14, marginBottom: 4 }}>{p.title}</div>
                   <div style={{ fontSize: 12.5, color: "rgba(245,245,247,0.6)", marginBottom: 6 }}>{p.authors}</div>
                   <div style={{ fontSize: 12, color: "rgba(245,245,247,0.45)" }}>{p.journal} · {p.year}</div>
@@ -431,7 +431,7 @@ function SchedulePage({ navigate }) {
         <div className="card-header"><div><h2 className="card-title">Field Calendar</h2><p className="card-sub">All upcoming deadlines and events</p></div></div>
         <div style={{ display: "flex", flexDirection: "column", gap: 4 }}>
           {scheduleEvents.map((ev, i) => (
-            <div key={i} style={{ display: "flex", gap: 16, alignItems: "center", padding: "14px 12px", borderRadius: 10, transition: "all 0.3s ease", cursor: "pointer" }}
+            <div key={i} className="schedule-row"
               onClick={() => navigate("/404")}
               onMouseEnter={e => { e.currentTarget.style.background = "rgba(255,255,255,0.03)"; e.currentTarget.style.transform = "translateX(4px)"; }}
               onMouseLeave={e => { e.currentTarget.style.background = "transparent"; e.currentTarget.style.transform = "none"; }}>
@@ -440,12 +440,12 @@ function SchedulePage({ navigate }) {
                 <div style={{ fontSize: 18, fontWeight: 800, color: "#fff" }}>{ev.date.split(" ")[1]}</div>
               </div>
               <div style={{ width: 3, alignSelf: "stretch", borderRadius: 999, background: scheduleTypeColor[ev.type], opacity: 0.7, flexShrink: 0 }} />
-              <div style={{ flex: 1 }}>
+              <div style={{ flex: 1, minWidth: 0 }}>
                 <div style={{ fontWeight: 700, color: "#fff", fontSize: 13.5 }}>{ev.event}</div>
                 <div style={{ fontSize: 12, color: "rgba(245,245,247,0.55)", marginTop: 3 }}>📍 {ev.site}</div>
               </div>
-              {ev.type === "urgent" && <span style={{ background: "rgba(239,68,68,0.16)", color: "#fca5a5", borderRadius: 999, padding: "3px 10px", fontSize: 11.5, fontWeight: 700, flexShrink: 0 }}>Urgent</span>}
-              {ev.type === "meeting" && <span style={{ background: "rgba(139,157,175,0.2)", color: "#8B9DAF", borderRadius: 999, padding: "3px 10px", fontSize: 11.5, fontWeight: 700, flexShrink: 0 }}>Meeting</span>}
+              {ev.type === "urgent" && <span className="evt-tag" style={{ background: "rgba(239,68,68,0.16)", color: "#fca5a5" }}>Urgent</span>}
+              {ev.type === "meeting" && <span className="evt-tag" style={{ background: "rgba(139,157,175,0.2)", color: "#8B9DAF" }}>Meeting</span>}
             </div>
           ))}
         </div>
@@ -482,7 +482,7 @@ function BudgetPage({ navigate }) {
             const pct = Math.round((b.spent / b.allocated) * 100);
             return (
               <div key={i} onClick={() => navigate("/404")} style={{ cursor: "pointer" }}>
-                <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 8 }}>
+                <div className="budget-row-header" style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 8, flexWrap: "wrap", gap: 6 }}>
                   <div>
                     <span style={{ fontWeight: 700, color: "#fff", fontSize: 13.5 }}>{b.site}</span>
                     <span className="region-tag" style={{ marginLeft: 10, color: siteAccents[b.region], borderColor: siteAccents[b.region], background: `${siteAccents[b.region]}1f`, fontSize: 11 }}>{b.region}</span>
@@ -524,16 +524,16 @@ function PublicationsPage({ navigate }) {
       </section>
       <div className="card">
         <div className="card-header"><div><h2 className="card-title">Published Works</h2><p className="card-sub">Books, guides, and reports</p></div></div>
-        <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(280px, 1fr))", gap: 16 }}>
+        <div className="pub-grid">
           {publications.map((pub, i) => (
-            <div key={i} style={{ background: "var(--surface-2)", borderRadius: 12, padding: "20px", border: "1px solid var(--border)", transition: "all 0.3s ease", cursor: "pointer" }}
+            <div key={i} className="pub-card"
               onClick={() => navigate("/404")}
               onMouseEnter={e => { e.currentTarget.style.borderColor = "rgba(212,165,116,0.4)"; e.currentTarget.style.transform = "translateY(-4px)"; }}
               onMouseLeave={e => { e.currentTarget.style.borderColor = "var(--border)"; e.currentTarget.style.transform = "none"; }}>
               <div style={{ fontSize: 30, marginBottom: 12 }}>📖</div>
               <div style={{ fontWeight: 700, color: "#fff", fontSize: 14, marginBottom: 6, lineHeight: 1.4 }}>{pub.title}</div>
               <div style={{ fontSize: 12, color: "rgba(245,245,247,0.5)", marginBottom: 14 }}>{pub.type} · {pub.year} · {pub.pages} pages</div>
-              <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
+              <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", flexWrap: "wrap", gap: 8 }}>
                 <span style={{ fontSize: 12, color: "#D4A574", fontWeight: 700 }}>📥 {pub.downloads.toLocaleString()} downloads</span>
                 <button className="btn-outline" style={{ padding: "5px 12px", fontSize: 11.5 }} onClick={(e) => { e.stopPropagation(); navigate("/404"); }}>View</button>
               </div>
@@ -561,7 +561,7 @@ function SettingsPage({ navigate }) {
     <>
       <div className="card">
         <div className="card-header"><div><h2 className="card-title">Account</h2><p className="card-sub">Your profile information</p></div></div>
-        <div style={{ display: "flex", alignItems: "center", gap: 18, marginBottom: 20 }}>
+        <div className="account-row" style={{ display: "flex", alignItems: "center", gap: 18, marginBottom: 20, flexWrap: "wrap" }}>
           <img src="https://placehold.co/64x64/1b1b29/f5f5f7?text=You" alt="avatar" style={{ width: 64, height: 64, borderRadius: "50%", border: "2px solid rgba(212,165,116,0.4)" }} />
           <div>
             <div style={{ fontWeight: 700, color: "#fff", fontSize: 16 }}>Dr. Alex Morgan</div>
@@ -579,7 +579,7 @@ function SettingsPage({ navigate }) {
             { label: "Weekly Email Digest", sub: "Summary of field activity sent every Monday", value: emailDigest, set: setEmailDigest },
             { label: "Dark Mode", sub: "Use dark colour scheme across the dashboard", value: darkMode, set: setDarkMode },
           ].map((item, i) => (
-            <div key={i} style={{ display: "flex", justifyContent: "space-between", alignItems: "center", padding: "18px 0", borderBottom: i < 2 ? "1px solid rgba(255,255,255,0.06)" : "none" }}>
+            <div key={i} className="pref-row" style={{ display: "flex", justifyContent: "space-between", alignItems: "center", padding: "18px 0", borderBottom: i < 2 ? "1px solid rgba(255,255,255,0.06)" : "none" }}>
               <div>
                 <div style={{ fontWeight: 700, color: "#fff", fontSize: 13.5 }}>{item.label}</div>
                 <div style={{ fontSize: 12.5, color: "rgba(245,245,247,0.5)", marginTop: 2 }}>{item.sub}</div>
@@ -587,7 +587,7 @@ function SettingsPage({ navigate }) {
               <Toggle value={item.value} onChange={item.set} />
             </div>
           ))}
-          <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", paddingTop: 18 }}>
+          <div className="pref-row" style={{ display: "flex", justifyContent: "space-between", alignItems: "center", paddingTop: 18 }}>
             <div>
               <div style={{ fontWeight: 700, color: "#fff", fontSize: 13.5 }}>Language</div>
               <div style={{ fontSize: 12.5, color: "rgba(245,245,247,0.5)", marginTop: 2 }}>Interface display language</div>
@@ -610,7 +610,7 @@ function SettingsPage({ navigate }) {
 }
 
 const pageMap = {
-  dashboard: { title: "Dashboard", sub: "Welcome back — here's your archaeological overview.", component: DashboardPage },
+  dashboard: { title: "Dashboard", sub: "", component: DashboardPage },
   excavations: { title: "Excavations", sub: "All active and completed field operations.", component: ExcavationsPage },
   teams: { title: "Field Teams", sub: "Manage your researchers and field directors.", component: TeamsPage },
   artifacts: { title: "Artifacts", sub: "Registry of all catalogued archaeological finds.", component: ArtifactsPage },
@@ -625,9 +625,15 @@ export default function Dashboard() {
   const navigate=useNavigate()
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const [activeNav, setActiveNav] = useState("dashboard");
+  const mainRef = useRef(null);
 
   const currentPage = pageMap[activeNav];
   const PageComponent = currentPage.component;
+
+  useEffect(() => {
+    window.scrollTo({ top: 0, left: 0, behavior: "instant" });
+    if (mainRef.current) mainRef.current.scrollTop = 0;
+  }, [activeNav]);
 
   return (
     <div className="dashboard-root">
@@ -661,7 +667,7 @@ export default function Dashboard() {
         <button className="logout-full-btn" style={{ marginTop: "auto" }} onClick={()=>navigate("/login")}>↪ Logout</button>
       </aside>
 
-      <main className="main-content">
+      <main className="main-content" ref={mainRef}>
         <header className="topbar">
           <div className="topbar-left">
             <button className="hamburger" onClick={() => setSidebarOpen(true)} aria-label="Open menu">

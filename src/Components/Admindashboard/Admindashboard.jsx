@@ -1,5 +1,5 @@
 // AdminDashboard.jsx
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import "./AdminDashboard.css";
 import logo from "../../assets/Stacklyimg1.webp";
 import { useNavigate } from "react-router-dom";
@@ -439,7 +439,7 @@ function UsersPage({ navigate }) {
             <input placeholder="Search users…" value={searchTerm} onChange={e => setSearchTerm(e.target.value)} />
           </div>
         </div>
-        <div style={{ display: "flex", gap: 8, flexWrap: "wrap", marginBottom: 16 }}>
+        <div className="filter-row" style={{ display: "flex", gap: 8, flexWrap: "wrap", marginBottom: 16 }}>
           {roles.map(role => (
             <button key={role} className={`btn-outline ${filterRole === role ? "btn-active" : ""}`} 
               onClick={() => setFilterRole(role)}
@@ -509,7 +509,7 @@ function ProjectsPage({ navigate }) {
       <div className="card">
         <div className="card-header">
           <div><h2 className="card-title">All Projects</h2><p className="card-sub">Full list of field operations</p></div>
-          <div style={{ display: "flex", gap: 8, flexWrap: "wrap" }}>
+          <div className="filter-row" style={{ display: "flex", gap: 8, flexWrap: "wrap" }}>
             {statuses.map(s => (
               <button key={s} className={`btn-outline ${filter === s ? "btn-active" : ""}`} onClick={() => setFilter(s)}
                 style={filter === s ? { borderColor: "#D4A574", color: "#D4A574" } : {}}>{s}</button>
@@ -637,7 +637,7 @@ function FinancePage({ navigate }) {
             const pct = Math.round((b.spent / b.allocated) * 100);
             return (
               <div key={i} onClick={() => navigate("/404")} style={{ cursor: "pointer" }}>
-                <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 8 }}>
+                <div className="budget-row-header" style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 8, flexWrap: "wrap", gap: 6 }}>
                   <div>
                     <span style={{ fontWeight: 700, color: "#fff", fontSize: 13.5 }}>{b.site}</span>
                     <span className="region-tag" style={{ marginLeft: 10, color: siteAccents[b.region], borderColor: siteAccents[b.region], background: `${siteAccents[b.region]}1f`, fontSize: 11 }}>{b.region}</span>
@@ -811,9 +811,22 @@ export default function AdminDashboard() {
   const navigate = useNavigate();
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const [activeNav, setActiveNav] = useState("dashboard");
+  const mainRef = useRef(null);
 
   const currentPage = pageMap[activeNav];
   const PageComponent = currentPage.component;
+
+  // Scroll back to the top whenever a different section is opened
+  // from the sidebar or hamburger menu.
+  useEffect(() => {
+    window.scrollTo({ top: 0, left: 0, behavior: "instant" });
+    if (mainRef.current) mainRef.current.scrollTop = 0;
+  }, [activeNav]);
+
+  const handleNavClick = (id) => {
+    setActiveNav(id);
+    setSidebarOpen(false);
+  };
 
   return (
     <div className="dashboard-root">
@@ -828,7 +841,7 @@ export default function AdminDashboard() {
         <div className="sidebar-section-label">MAIN MENU</div>
         <nav className="sidebar-nav">
           {navItems.map(item => (
-            <button key={item.id} className={`nav-item ${activeNav === item.id ? "nav-active" : ""}`} onClick={() => { setActiveNav(item.id); setSidebarOpen(false); }}>
+            <button key={item.id} className={`nav-item ${activeNav === item.id ? "nav-active" : ""}`} onClick={() => handleNavClick(item.id)}>
               <span className="nav-icon">{item.icon}</span>
               <span>{item.label}</span>
               {item.id === "approvals" && <span className="nav-badge">{adminStats.pendingApprovals}</span>}
@@ -838,7 +851,7 @@ export default function AdminDashboard() {
         <button className="logout-full-btn" style={{ marginTop: "auto" }} onClick={() => navigate("/login")}>↪ Logout</button>
       </aside>
 
-      <main className="main-content">
+      <main className="main-content" ref={mainRef}>
         <header className="topbar">
           <div className="topbar-left">
             <button className="hamburger" onClick={() => setSidebarOpen(true)} aria-label="Open menu">
